@@ -1,0 +1,5 @@
+library('testthat')
+library('ProjectTemplate')
+create.project("dataanalysys-project1")
+setwd("/home/fontanon/Dropbox/Devel/dataanalysis-project1/")
+savehistory("~/Dropbox/Devel/dataanalysis-project1/dataanalysys-project1/src/history.R")
