@@ -6,6 +6,7 @@ download.file("http://spark-public.s3.amazonaws.com/dataanalysis/loansData.csv",
 download.file("http://spark-public.s3.amazonaws.com/dataanalysis/loansData.rda", destfile="data/loansData.rda")
 download.file("http://spark-public.s3.amazonaws.com/dataanalysis/loansCodebook.pdf", destfile="data/loansCodebook.pdf")
 dateDownloaded <- date()
+load("~/Dropbox/Devel/dataanalysis-project1/dataanalysys-project1/data/loansData.rda")
 
 # Clean
 cleanLoansData <- loansData
