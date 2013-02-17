@@ -181,7 +181,7 @@ hljs.initHighlightingOnLoad();
 <pre><code class="r"># Final Loan Analysis ===================
 
 # Initialice project
-setwd(&quot;/home/fontanon/Dropbox/Devel/dataanalysis-project1/dataanalysys-project1&quot;)
+setwd(&quot;/home/fontanon/Dropbox/Devel/dataanalysis-project1&quot;)
 
 # Perform download of source files
 download.file(&quot;http://spark-public.s3.amazonaws.com/dataanalysis/loansData.csv&quot;, 
@@ -191,7 +191,7 @@ download.file(&quot;http://spark-public.s3.amazonaws.com/dataanalysis/loansData.
 download.file(&quot;http://spark-public.s3.amazonaws.com/dataanalysis/loansCodebook.pdf&quot;, 
     destfile = &quot;data/loansCodebook.pdf&quot;)
 dateDownloaded &lt;- date()
-load(&quot;~/Dropbox/Devel/dataanalysis-project1/dataanalysys-project1/data/loansData.rda&quot;)
+load(&quot;~/Dropbox/Devel/dataanalysis-project1/data/loansData.rda&quot;)
 
 # Clean
 cleanLoansData &lt;- loansData
