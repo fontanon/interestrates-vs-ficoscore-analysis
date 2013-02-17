@@ -70,10 +70,15 @@ IRFRLL36.lm <- lm(cleanLoansData$Interest.Rate[cleanLoansData$Loan.Length==36] ~
 IRFRLL60.lm <- lm(cleanLoansData$Interest.Rate[cleanLoansData$Loan.Length==60] ~ as.numeric(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length==60]))
 
 par(mfrow=c(1,1))
-plot(cleanLoansData$Interest.Rate ~ as.numeric(cleanLoansData$FICO.Range), col=as.factor(cleanLoansData$Loan.Length))
+plot(cleanLoansData$Interest.Rate ~ as.numeric(cleanLoansData$FICO.Range), col=as.factor(cleanLoansData$Loan.Length), 
+     xlab="FICO Ranges from 665-659 to 830-834 (numeric)",
+     ylab="Interest Rate (%)",
+     main="Interest Rate vs. FICO Range"
+)
 IRFRLL.lm <- lm(cleanLoansData$Interest.Rate ~ as.numeric(cleanLoansData$FICO.Range) + as.factor(cleanLoansData$Loan.Length))
 lines(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length==36], IRFRLL36.lm$fitted,col="black",lwd=3)
 lines(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length==60], IRFRLL60.lm$fitted,col="red",lwd=3)
+legend(35,25,col=unique(as.factor(cleanLoansData$Loan.Length)),legend=unique(cleanLoansData$Loan.Length),pch=19)
 
 # Interest Rate vs. FICO Range + (Amount Requested / Loan Length) inference analysis
 IRFRLLAR.lm <- lm(cleanLoansData$Interest.Rate ~ as.numeric(cleanLoansData$FICO.Range) + cleanLoansData$Amount.Requested/cleanLoansData$Loan.Length)
@@ -82,8 +87,8 @@ confint(IRFRLLAR.lm)
 
 library("lattice")
 amount.requested <- equal.count(cleanLoansData$Amount.Requested)
-xyplot(cleanLoansData$Interest.Rate ~ cleanLoansData$FICO.Range | amount.requested + as.factor(cleanLoansData$Loan.Length), panel = function(x,y, ...) {
+xyplot(cleanLoansData$Interest.Rate ~ as.numeric(cleanLoansData$FICO.Range) | amount.requested + as.factor(cleanLoansData$Loan.Length), panel = function(x,y, ...) {
   panel.xyplot(x,y,...)
   fit<-lm(y~as.numeric(x))
   panel.abline(fit)
-}, xlab="FICO Range (score)", ylab="Interest Rate (%)", main = "Interest Rate vs. FICO Range")
+},xlab="FICO Ranges from 665-659 to 830-834 (numeric)", ylab="Interest Rate (%)", main = "Interest Rate vs. FICO Range")
