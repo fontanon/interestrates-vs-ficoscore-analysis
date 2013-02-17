@@ -15,7 +15,7 @@ load("~/Dropbox/Devel/dataanalysis-project1/data/loansData.rda")
 cleanLoansData <- loansData
 cleanLoansData$Interest.Rate <- as.numeric(gsub('\\%', '', gsub(',','.',loansData$Interest.Rate)))
 cleanLoansData$Debt.To.Income.Ratio <- as.numeric(gsub('\\%', '', gsub(',','.',loansData$Debt.To.Income.Ratio)))
-cleanLoansData$Loan.Length <- as.numeric(gsub('\\ months', '', loansData$Loan.Length))
+#cleanLoansData$Loan.Length <- as.numeric(gsub('\\ months', '', loansData$Loan.Length))
 cleanLoansData$Employment.Length <- gsub('\\ years','',loansData$Employment.Length)
 cleanLoansData$Employment.Length <- gsub('< 1 year','0',loansData$Employment.Length)
 cleanLoansData$Employment.Length <- gsub('10+','11',loansData$Employment.Length)
@@ -66,8 +66,8 @@ lines(cleanLoansData$Amount.Requested, IRAR.lm$fitted.values, lwd=5, col="red")
 
 # Interest Rate vs. FICO Range + Loan Length
 IRFRLL.lm <- lm(cleanLoansData$Interest.Rate ~ cleanLoansData$FICO.Range + as.factor(cleanLoansData$Loan.Length))
-IRFRLL36.lm <- lm(cleanLoansData$Interest.Rate[cleanLoansData$Loan.Length==36] ~ as.numeric(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length==36]))
-IRFRLL60.lm <- lm(cleanLoansData$Interest.Rate[cleanLoansData$Loan.Length==60] ~ as.numeric(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length==60]))
+IRFRLL36.lm <- lm(cleanLoansData$Interest.Rate[cleanLoansData$Loan.Length=="36 months"] ~ as.numeric(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length=="36 months"]))
+IRFRLL60.lm <- lm(cleanLoansData$Interest.Rate[cleanLoansData$Loan.Length=="60 months"] ~ as.numeric(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length=="60 months"]))
 
 par(mfrow=c(1,1))
 plot(cleanLoansData$Interest.Rate ~ as.numeric(cleanLoansData$FICO.Range), col=as.factor(cleanLoansData$Loan.Length), 
@@ -76,9 +76,9 @@ plot(cleanLoansData$Interest.Rate ~ as.numeric(cleanLoansData$FICO.Range), col=a
      main="Interest Rate vs. FICO Range"
 )
 IRFRLL.lm <- lm(cleanLoansData$Interest.Rate ~ as.numeric(cleanLoansData$FICO.Range) + as.factor(cleanLoansData$Loan.Length))
-lines(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length==36], IRFRLL36.lm$fitted,col="black",lwd=3)
-lines(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length==60], IRFRLL60.lm$fitted,col="red",lwd=3)
-legend(35,25,col=unique(as.factor(cleanLoansData$Loan.Length)),legend=unique(cleanLoansData$Loan.Length),pch=19)
+lines(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length=="36 months"], IRFRLL36.lm$fitted,col="red",lwd=3)
+lines(cleanLoansData$FICO.Range[cleanLoansData$Loan.Length=="60 months"], IRFRLL60.lm$fitted,col="green",lwd=3)
+legend(30,25,col=unique(as.factor(cleanLoansData$Loan.Length)),legend=unique(cleanLoansData$Loan.Length),pch=19)
 
 # Interest Rate vs. FICO Range + (Amount Requested / Loan Length) inference analysis
 IRFRLLAR.lm <- lm(cleanLoansData$Interest.Rate ~ as.numeric(cleanLoansData$FICO.Range) + cleanLoansData$Amount.Requested/cleanLoansData$Loan.Length)
